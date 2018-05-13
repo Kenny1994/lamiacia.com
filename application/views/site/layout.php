@@ -1,0 +1,1 @@
+<?php echo public_url('js/jquery/jquery.min.js');
