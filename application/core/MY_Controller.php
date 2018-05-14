@@ -14,7 +14,9 @@ class MY_Controller extends CI_Controller
      */
     function __construct()
     {
-        return parent::__construct();
+
+        parent::__construct();
+        $this->check_controller();
     }
 
     /**
@@ -22,7 +24,6 @@ class MY_Controller extends CI_Controller
      */
     function check_controller()
     {
-
         $controller = $this->uri->segment(1);
 
         switch ($controller) {

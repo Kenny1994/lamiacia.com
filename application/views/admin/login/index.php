@@ -1,43 +1,38 @@
 <html>
     <head>
-        <?php $this->load->view('admin/head',$data); ?>
+        <?php $this->load->view('admin/head',$this->data); ?>
     </head>
-    <body class="nobg loginPage" style="min-height:100%;">
-
-    <!-- Main content wrapper -->
-    <div class="loginWrapper" style="top:45%;">
-
-        <div class="widget" id="admin_login" style="height:auto; margin:auto;">
-            <div class="title"><img src="<?php echo base_url('assets/admin') ?>/images/icons/dark/laptop.png" alt="" class="titleIcon" />
-                <h6>Đăng nhập</h6>
+    <body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth">
+                <div class="row w-100">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auth-form-light text-left p-5">
+                            <div class="brand-logo">
+                                <img src="<?php echo base_url('assets/admin')?>/images/logo.svg">
+                            </div>
+                            <h4>Chào mừng đến với Lamiacia</h4>
+                            <h6 class="font-weight-light">Đăng nhập trang quản trị </h6>
+                            <form class="pt-3">
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                </div>
+                                <div class="mt-3">
+                                    <input type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" value="Đăng Nhập">
+<!--                                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="--><?php //echo base_url('assets/admin')?><!--/index.html">SIGN IN</a>-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <form class="form" id="form" action="" method="post">
-                <fieldset>
-                    <div class="formRow">
-                        <label for="param_username">Tên đăng nhập:</label>
-                        <div class="loginInput"><input type="text" name="username" id="param_username" /></div>
-                        <div class="clear"></div>
-                    </div>
-
-                    <div class="formRow">
-                        <label for="param_password">Mật khẩu:</label>
-                        <div class="loginInput"><input type="password" name="password" id="param_password" /></div>
-                        <div class="clear"></div>
-                    </div>
-
-                    <div class="loginControl">
-                        <input type='hidden' name="submit" value='1'/>
-                        <input type="submit"  value="Đăng nhập" class="dredB logMeIn" />
-                        <div class="clear"></div>
-                    </div>
-                </fieldset>
-            </form>
+            <!-- content-wrapper ends -->
         </div>
-
+        <!-- page-body-wrapper ends -->
     </div>
-
-    <?php $this->load->view('admin/footer'); ?>
-
     </body>
 </html>

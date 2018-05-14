@@ -4,16 +4,23 @@
     </head>
 
     <body>
-        <div id="left_content">
+    <div class="container-scroller">
+        <?php $this->load->view('admin/header');?>
+        <div class="container-fluid page-body-wrapper">
             <?php $this->load->view('admin/left');?>
-        </div>
-
-        <div id="rightSide">
-            <?php $this->load->view('admin/header');?>
-
             <?php $this->load->view($temp,$this->data);?>
-
-            <?php $this->load->view('admin/footer');?>
         </div>
+    </div>
+<!--        <div id="left_content">-->
+<!---->
+<!--        </div>-->
+<!---->
+<!--        <div id="rightSide">-->
+<!---->
+<!---->
+<!--            -->
+<!---->
+<!--            --><?php //$this->load->view('admin/footer');?>
+<!--        </div>-->
     </body>
 </html>
