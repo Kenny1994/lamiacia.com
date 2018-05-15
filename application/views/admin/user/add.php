@@ -1,103 +1,68 @@
-<?php $this->load->view('admin/admin/header', $this->data) ?>
-
-<div class="wrapper">
-
-    <!-- Form -->
-    <form class="form" id="form" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <div class="widget">
-                <div class="title">
-                    <img src="<?php echo base_url('assets/admin') ?>/images/icons/dark/add.png" class="titleIcon">
-                    <h6>Thêm mới quản trị viên</h6>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_name">Tên:<span class="req">*</span></label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="name" id="param_name" _autocheck="true" type="text"
-                                                    value="<?php echo set_value('name') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"><?php echo form_error('name') ?></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_user">User:<span class="req">*</span></label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="user" id="param_user" _autocheck="true" type="text"
-                                                    value="<?php echo set_value('user') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"><?php echo form_error('user') ?></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_password">Password:<span class="req">*</span></label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="password" id="param_password" _autocheck="true"
-                                                    type="password" value="<?php echo set_value('password') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"><?php echo form_error('password') ?></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_re_password">Re-Password:<span class="req">*</span></label>
-                    <div class="formRight">
-                                <span class="oneTwo"><input name="re_password" id="param_re_password" _autocheck="true"
-                                                            type="password"
-                                                            value="<?php echo set_value('re_password') ?>"></span>
-                        <span name=" name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"><?php echo form_error('re_password') ?></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_email">Email:</label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="email" id="param_email" _autocheck="true" type="text"
-                                                    value="<?php echo set_value('email') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"><?php echo form_error('email') ?></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_phone">Phone:</label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="phone" id="param_phone" _autocheck="true" type="text"
-                                                    value="<?php echo set_value('phone') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="formRow">
-                    <label class="formLeft" for="param_address">Address:</label>
-                    <div class="formRight">
-                        <span class="oneTwo"><input name="address" id="param_address" _autocheck="true"
-                                                    type="text" value="<?php echo set_value('address') ?>"></span>
-                        <span name="name_autocheck" class="autocheck"></span>
-                        <div name="name_error" class="clear error"></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- End tab_container-->
-
-                <div class="formSubmit">
-                    <input value="Thêm mới" class="redB" type="submit">
-                    <!--                    <input value="Hủy bỏ" class="basic" type="reset">-->
-                </div>
-                <div class="clear"></div>
-            </div>
-        </fieldset>
-    </form>
+<div class="page-header">
+    <h3 class="page-title">
+        Thêm mới quản trị viên.
+    </h3>
 </div>
-
-<div class="clear mt30"></div>
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Nhập form thêm quản trị viên.</h4>
+                <form id="add-new-user-form" class="forms-sample" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-3 col-form-label">User Name<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="username" id="username" placeholder="Nhập user name" type="text" value="<?php echo set_value('username') ?>">
+                                <div class="text-danger"><?php echo form_error('user') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-3 col-form-label">Password<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="password" placeholder="Nhập password" type="password" value="<?php echo set_value('password') ?>">
+                                <div class="text-danger"><?php echo form_error('password') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="re-password" class="col-sm-3 col-form-label">Re-Password<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="re-password" placeholder="Nhập lại password" type="password" value="<?php echo set_value('re-password') ?>">
+                                <div class="text-danger"><?php echo form_error('re_password') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Tên người dùng<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input name="name" class="form-control" id="name" placeholder="Nhập tên người dùng" type="text" value="<?php echo set_value('name') ?>">
+                                <div class="text-danger"><?php echo form_error('name') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-3 col-form-label">Email người dùng<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="email" placeholder="Nhập Email người dùng" type="text" value="<?php echo set_value('email') ?>">
+                                <div class="text-danger"><?php echo form_error('email') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="phone" class="col-sm-3 col-form-label">Số điện thoại</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="phone" placeholder="Nhập số điện thoại" type="text" value="<?php echo set_value('phone') ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-3 col-form-label">Địa chỉ</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="address" placeholder="Nhập địa chỉ" type="text" value="<?php echo set_value('address') ?>">
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-gradient-primary mr-2" value="Đồng ý">
+                        <button class="btn btn-light">Trở về</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

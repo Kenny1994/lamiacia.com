@@ -1,0 +1,14 @@
+#add-new-user{
+    position: absolute;
+    top: 17%;
+    right: 1%;
+    width: 8%;
+}
+#user-table i{
+    color: #b66dff;
+}
+#add-new-user-form .text-danger p{
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}

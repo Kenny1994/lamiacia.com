@@ -21,15 +21,15 @@ class User extends MY_Controller
 
     public function index()
     {
-        $input = array();
+        $input['order'] = array('id','ASC');
         $this->load->model('admin_model');
 
-        $list = $this->admin_model->get_list($input);
-        $totalAdmin = $this->admin_model->get_total($input);
+        $userCollection = $this->admin_model->get_list($input);
+        $totalUser = $this->admin_model->get_total($input);
 
         $this->data = [
-            'total' => $totalAdmin,
-            'list' => $list,
+            'count' => $totalUser,
+            'collection' => $userCollection,
             'temp' => 'admin/user/index',
             'message' =>  $this->session->flashdata('message')
         ];
@@ -52,14 +52,18 @@ class User extends MY_Controller
 
         //neu co du lieu post len de ktra
         if ($this->input->post()) {
-            $this->form_validation->set_rules('name', 'Tên', 'required|is_unique[admin.username]');
-            $this->form_validation->set_rules('user', 'User', 'required');
-            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-            $this->form_validation->set_rules('re_password', 'Re-Password', 'required|matches[password]');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[admin.email]');
+            $test = $this->input->post('username');
+            echo $test;
+            die;
+//            $this->form_validation->set_rules('name', 'Tên người dùng', 'required|is_unique[admin.username]');
+//            $this->form_validation->set_rules('user', 'User', 'required');
+//            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+//            $this->form_validation->set_rules('re_password', 'Re-Password', 'required|matches[password]');
+//            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[admin.email]');
 
             //nhap lieu chinh xac
             if ($this->form_validation->run()) {
+                die;
                 //them vao csdl
                 $this->load->model('admin_model');
                 $adminInfo = [
@@ -82,7 +86,7 @@ class User extends MY_Controller
         $this->data = [
             'title' => 'Thêm mới',
             'subtitle' => 'Thêm mới quản trị viên',
-            'temp' => 'admin/admin/add'
+            'temp' => 'admin/user/add'
         ];
         $this->load->view('admin/main', $this->data);
     }
