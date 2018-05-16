@@ -52,22 +52,20 @@ class User extends MY_Controller
 
         //neu co du lieu post len de ktra
         if ($this->input->post()) {
-            $test = $this->input->post('username');
-            echo $test;
-            die;
-//            $this->form_validation->set_rules('name', 'Tên người dùng', 'required|is_unique[admin.username]');
-//            $this->form_validation->set_rules('user', 'User', 'required');
-//            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-//            $this->form_validation->set_rules('re_password', 'Re-Password', 'required|matches[password]');
-//            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[admin.email]');
+
+            $this->form_validation->set_rules('name', 'Tên người dùng', 'required|is_unique[admin.username]');
+            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+            $this->form_validation->set_rules('re-password', 'Re-Password', 'required|matches[password]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[admin.email]');
 
             //nhap lieu chinh xac
             if ($this->form_validation->run()) {
-                die;
+
                 //them vao csdl
                 $this->load->model('admin_model');
                 $adminInfo = [
-                    'username' => $this->input->post('user'),
+                    'username' => $this->input->post('username'),
                     'password' => md5($this->input->post('password')),
                     'name' => $this->input->post('name'),
                     'email' => $this->input->post('email'),
@@ -75,11 +73,11 @@ class User extends MY_Controller
                     'address' => $this->input->post('address'),
                 ];
                 if ($this->admin_model->create($adminInfo)) {
-                    $this->session->set_flashdata('message','Thêm mới thành công');
+                    $this->session->set_flashdata('message','Thêm mới quản trị viên thành công');
                 } else {
-                    $this->session->set_flashdata('message','Thêm mới không thành công');
+                    $this->session->set_flashdata('message','Thêm mới quản trị viên không thành công');
                 }
-                redirect(base_url('admin/admin'));
+                redirect(get_admin_url('user'));
             }
         }
 
@@ -91,6 +89,11 @@ class User extends MY_Controller
         $this->load->view('admin/main', $this->data);
     }
 
+    public function delete()
+    {
+        echo 'da delete';
+        die;
+    }
     public function edit()
     {
         $id = $this->uri->rsegment(3);

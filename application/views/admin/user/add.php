@@ -20,41 +20,41 @@
                         <div class="form-group row">
                             <label for="password" class="col-sm-3 col-form-label">Password<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="password" placeholder="Nhập password" type="password" value="<?php echo set_value('password') ?>">
+                                <input class="form-control" name="password" id="password" placeholder="Nhập password" type="password" value="<?php echo set_value('password') ?>">
                                 <div class="text-danger"><?php echo form_error('password') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="re-password" class="col-sm-3 col-form-label">Re-Password<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="re-password" placeholder="Nhập lại password" type="password" value="<?php echo set_value('re-password') ?>">
-                                <div class="text-danger"><?php echo form_error('re_password') ?></div>
+                                <input class="form-control" name="re-password" id="re-password" placeholder="Nhập lại password" type="password" value="<?php echo set_value('re-password') ?>">
+                                <div class="text-danger"><?php echo form_error('re-password') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Tên người dùng<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input name="name" class="form-control" id="name" placeholder="Nhập tên người dùng" type="text" value="<?php echo set_value('name') ?>">
+                                <input class="form-control" name="name" id="name" placeholder="Nhập tên người dùng" type="text" value="<?php echo set_value('name') ?>">
                                 <div class="text-danger"><?php echo form_error('name') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="email" class="col-sm-3 col-form-label">Email người dùng<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="email" placeholder="Nhập Email người dùng" type="text" value="<?php echo set_value('email') ?>">
+                                <input class="form-control" name="email" id="email" placeholder="Nhập Email người dùng" type="text" value="<?php echo set_value('email') ?>">
                                 <div class="text-danger"><?php echo form_error('email') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone" class="col-sm-3 col-form-label">Số điện thoại</label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="phone" placeholder="Nhập số điện thoại" type="text" value="<?php echo set_value('phone') ?>">
+                                <input class="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại" type="text" value="<?php echo set_value('phone') ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="address" class="col-sm-3 col-form-label">Địa chỉ</label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="address" placeholder="Nhập địa chỉ" type="text" value="<?php echo set_value('address') ?>">
+                                <input class="form-control" name="address" id="address" placeholder="Nhập địa chỉ" type="text" value="<?php echo set_value('address') ?>">
                             </div>
                         </div>
                         <input type="submit" class="btn btn-gradient-primary mr-2" value="Đồng ý">
