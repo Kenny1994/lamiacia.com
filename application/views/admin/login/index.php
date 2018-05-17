@@ -14,14 +14,17 @@
                             </div>
                             <h4>Chào mừng đến với Lamiacia</h4>
                             <h6 class="font-weight-light">Đăng nhập trang quản trị </h6>
-                            <form class="pt-3">
+                            <form class="pt-3" method="post">
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                    <input type="text" class="form-control form-control-lg" id="username" name="username" value="<?php echo set_value('username') ?>" placeholder="Username">
+                                    <div class="text-danger"><?php echo form_error('username') ?></div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                    <input type="password" class="form-control form-control-lg" id="password" name="password" value="<?php echo set_value('password') ?>" placeholder="Password">
+                                    <div class="text-danger"><?php echo form_error('password') ?></div>
                                 </div>
                                 <div class="mt-3">
+                                    <div class="text-danger"><?php echo form_error('login') ?></div>
                                     <input type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" value="Đăng Nhập">
 <!--                                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="--><?php //echo base_url('assets/admin')?><!--/index.html">SIGN IN</a>-->
                                 </div>

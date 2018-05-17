@@ -1,18 +1,25 @@
-#add-new-user{
+#add-new-button{
     position: absolute;
-    top: 17%;
+    top: 40px;
     right: 1%;
-    width: 8%;
+    width: 45px;
+    font-size: 2.3rem;
 }
-#user-table i{
+#list-table i{
     color: #b66dff;
 }
-#add-new-user-form .text-danger p{
+#add-new-form .text-danger p{
     font-size: 12px;
     margin-top: 10px;
     margin-bottom: 0;
 }
+#add-new-button i{
+    font-size: 2.5rem;
+}
 .modal-footer{
     justify-content: center;
 
+}
+.table-list-record .card{
+    overflow-x: scroll;
 }
