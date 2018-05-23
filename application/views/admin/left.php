@@ -41,7 +41,7 @@
             </a>
             <div class="collapse" id="catalog-manager">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Sản phẩm</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('product')?>">Sản phẩm</a></li>
                 </ul>
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('catalog')?>">Danh mục sản phẩm</a></li>

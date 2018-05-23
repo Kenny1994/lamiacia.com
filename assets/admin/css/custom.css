@@ -23,3 +23,21 @@
 .table-list-record .card{
     overflow-x: scroll;
 }
+
+.table-pagination{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+.table-pagination a{
+    border: solid 1px #dfdfdf;
+    padding: 5px;
+}
+.table-pagination a:hover{
+    border: solid 1px #dfdfdf;
+    padding: 5px;
+    text-decoration: none;
+}
+.table-pagination strong{
+    border: solid 1px #dfdfdf;
+    padding: 5px;
+}

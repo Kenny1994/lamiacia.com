@@ -17,6 +17,7 @@ class MY_Controller extends CI_Controller
 
         parent::__construct();
         $this->check_controller();
+        $this->load->helper('common');
     }
 
     /**

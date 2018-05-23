@@ -1,51 +1,69 @@
 
 <div class="page-header">
     <h3 class="page-title">
-        Sửa thông tin quản trị viên.
+        Account Information
     </h3>
 </div>
 <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-xl-10 col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Nhập form sửa thông tin quản trị viên.</h4>
                 <form id="add-new-form" class="forms-sample" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="form-group row">
                             <label for="username" class="col-sm-3 col-form-label">User Name<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="username" id="username" placeholder="Nhập user name" type="text" disabled value="<?php echo $user->username ?>">
+                                <input class="form-control" name="username" id="username" placeholder="Enter user name" type="text" value="<?php echo $user->username ?>">
                                 <div class="text-danger"><?php echo form_error('username') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">Tên người dùng<span class="text-danger">*</span></label>
+                            <label for="name" class="col-sm-3 col-form-label">Full Name<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="name" id="name" placeholder="Nhập tên người dùng" type="text" value="<?php echo $user->name ?>">
+                                <input class="form-control" name="name" id="name" placeholder="Enter your full name" type="text" value="<?php echo $user->name ?>">
                                 <div class="text-danger"><?php echo form_error('name') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-sm-3 col-form-label">Email người dùng<span class="text-danger">*</span></label>
+                            <label for="email" class="col-sm-3 col-form-label">Email<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="email" id="email" placeholder="Nhập Email người dùng" type="text" disabled value="<?php echo $user->email ?>">
+                                <input class="form-control" name="email" id="email" placeholder="Enter your email" type="text" value="<?php echo $user->email ?>">
                                 <div class="text-danger"><?php echo form_error('email') ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-sm-3 col-form-label">Số điện thoại</label>
+                            <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại" type="text" value="<?php echo $user->phone ?>">
+                                <input class="form-control" name="phone" id="phone" placeholder="Enter your phone number" type="text" value="<?php echo $user->phone ?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-sm-3 col-form-label">Địa chỉ</label>
+                            <label for="address" class="col-sm-3 col-form-label">Address</label>
                             <div class="col-sm-9">
-                                <input class="form-control" name="address" id="address" placeholder="Nhập địa chỉ" type="text" value="<?php echo $user->address ?>">
+                                <input class="form-control" name="address" id="address" placeholder="Enter your address" type="text" value="<?php echo $user->address ?>">
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-gradient-primary mr-2" value="Đồng ý">
-                        <a href="<?php echo get_admin_url('user')?>" class="btn btn-light">Trở về</a>
+
+                        <div class="form-group row">
+                            <label for="new_password" class="col-sm-3 col-form-label">New Password</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="new_password" id="new_password"
+                                       placeholder="Enter the new password" type="password">
+                                <div class="text-danger"><?php echo form_error('new_password') ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="re_new_password" class="col-sm-3 col-form-label">Password Confirmation</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" name="re_new_password" id="re_new_password"
+                                       placeholder="Re-Enter the new password"
+                                       type="password">
+                                <div class="text-danger"><?php echo form_error('re_new_password') ?></div>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="btn btn-gradient-primary mr-2" value="Submit">
+                        <a href="<?php echo get_admin_url('user')?>" class="btn btn-light">Back</a>
                     </fieldset>
                 </form>
             </div>

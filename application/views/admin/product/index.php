@@ -12,8 +12,8 @@
     <div class="col-lg-12 grid-margin stretch-card table-list-record">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Danh sách Admin / Số lượng <?php echo $count ?>.</h4>
-                <a href="<?php echo get_admin_url('user/add') ?>" id="add-new-button"
+                <h4 class="card-title">Danh sách San pham / Số lượng <?php echo $count ?>.</h4>
+                <a href="<?php echo get_admin_url('product/add') ?>" id="add-new-button"
                    class="btn btn-icon btn-rounded btn-gradient-primary">+</a>
             </div>
 
@@ -22,36 +22,33 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>User Name</th>
+                    <th>Thumbnail</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
+                    <th>Price</th>
+                    <th>Created Date</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($collection as $user): ?>
+                <?php foreach ($collection as $product): ?>
                     <tr>
-                        <td><?php echo $user->id ?></td>
-                        <td><?php echo $user->username ?></td>
-                        <td><?php echo $user->name ?></td>
-                        <td><?php echo $user->email ?></td>
-                        <td><?php echo $user->phone ?></td>
-                        <td><?php echo $user->address ?></td>
-<!--                        --><?php //if ($user->id > 1): ?>
-                        <td><a class="delete-action" href="<?php echo get_admin_url('user/delete/' . $user->id) ?>"
+                        <td><?php echo $product->id ?></td>
+                        <td><img class="img-lg"
+                                 src="<?php echo base_url('upload/product') . '/' . $product->image_link ?>"></td>
+                        <td><?php echo $product->name ?></td>
+                        <td><?php echo $product->price ?></td>
+                        <td><?php echo $product->created ?></td>
+                        <td><a class="delete-action" href="<?php echo get_admin_url('user/delete/' . $product->id) ?>"
                                data-toggle="modal" data-target="#myModal"><i class="mdi mdi-delete "></i>Delete</a> / <a
-                                    href="<?php echo get_admin_url('user/edit/' . $user->id) ?>"><i class="mdi mdi-wrench"></i> Update</a>
-                            / <a
-                                    href="<?php echo get_admin_url('user/edit_password/' . $user->id) ?>"><i class="mdi mdi-wrench"></i> Change Password</a></td>
-<!--                        --><?php //else:?>
-<!--                        <td><span class="text-danger">Main admin</span></td>-->
-<!--                        --><?php //endif;?>
+                                    href="<?php echo get_admin_url('user/edit/' . $product->id) ?>"><i
+                                        class="mdi mdi-wrench"></i> Update</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="pagination table-pagination">
+                <?php echo $this->pagination->create_links();?>
+            </div>
         </div>
     </div>
 </div>
@@ -65,7 +62,8 @@
                 <p>Bạn chắc chắn muốn xóa quản trị viên này?</p>
             </div>
             <div class="modal-footer">
-                <a href="<?php echo get_admin_url('user/delete/' . $user->id) ?>" class="btn btn-gradient-info btn-fw">Có</a>
+                <a href="<?php echo get_admin_url('user/delete/' . $product->id) ?>"
+                   class="btn btn-gradient-info btn-fw">Có</a>
                 <button type="button" class="btn btn-gradient-dark btn-fw" data-dismiss="modal">Hủy</button>
             </div>
         </div>

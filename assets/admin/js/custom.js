@@ -1,5 +1,5 @@
 
-$('.user-delete').each(function () {
+$('.delete-action').each(function () {
     $(this).on('click', function () {
         $('#myModal .modal-footer a').attr('href', $(this).attr('href'));
     });

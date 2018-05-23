@@ -1,11 +1,11 @@
 <?php
 
-function get_info_object1($info, $flag = true)
+function pre($list, $exit = true)
 {
-    echo '<pre>';
-    var_dump($info);
-    if ($flag)
+    echo "<pre>";
+    print_r($list);
+    if($exit)
     {
-        die;
+        die();
     }
 }

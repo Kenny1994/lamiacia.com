@@ -18,7 +18,7 @@
             </div>
 
 
-            <table id="list-table" class="table table-bordered">
+            <table id="list-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -41,14 +41,17 @@
                         <td><?php echo $catalog->site_title ?></td>
                         <td><?php echo $catalog->meta_desc ?></td>
                         <td><?php echo $catalog->meta_key ?></td>
-                        <td><a class="user-delete" href="<?php echo get_admin_url('user/delete/' . $catalog->id) ?>"
+                        <td><a class="delete-action" href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>"
                                data-toggle="modal" data-target="#myModal"><i class="mdi mdi-delete "></i>Delete</a> / <a
-                                    href="<?php echo get_admin_url('user/edit/' . $catalog->id) ?>"><i
+                                    href="<?php echo get_admin_url('catalog/edit/' . $catalog->id) ?>"><i
                                         class="mdi mdi-wrench"></i> Update</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="pagination table-pagination">
+                <?php echo $this->pagination->create_links();?>
+            </div>
         </div>
     </div>
 </div>
@@ -62,7 +65,7 @@
                 <p>Bạn chắc chắn muốn xóa danh mục này?</p>
             </div>
             <div class="modal-footer">
-                <a href="<?php echo get_admin_url('user/delete/' . $catalog->id) ?>" class="btn btn-gradient-info btn-fw">Có</a>
+                <a href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>" class="btn btn-gradient-info btn-fw">Có</a>
                 <button type="button" class="btn btn-gradient-dark btn-fw" data-dismiss="modal">Hủy</button>
             </div>
         </div>
