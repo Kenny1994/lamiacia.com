@@ -5,4 +5,10 @@ $('.delete-action').each(function () {
     });
 });
 
+$('.table-clicked').each(function () {
+    $(this).on('click', function () {
+        var url = $(this).attr('title');
+        window.location.href = url;
+    });
+});
 

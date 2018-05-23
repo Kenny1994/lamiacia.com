@@ -1,6 +1,6 @@
 <div class="page-header">
     <h3 class="page-title">
-        Bảng quản lý Admin.
+        Users.
     </h3>
 </div>
 <?php if (isset($message) && $message): ?>
@@ -12,7 +12,7 @@
     <div class="col-lg-12 grid-margin stretch-card table-list-record">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Danh sách Admin / Số lượng <?php echo $count ?>.</h4>
+                <h4 class="card-title">Total users: <?php echo $count ?>.</h4>
                 <a href="<?php echo get_admin_url('user/add') ?>" id="add-new-button"
                    class="btn btn-icon btn-rounded btn-gradient-primary">+</a>
             </div>
@@ -32,22 +32,16 @@
                 </thead>
                 <tbody>
                 <?php foreach ($collection as $user): ?>
-                    <tr>
+                    <tr class="table-clicked" id="record-<?php echo $user->id ?>"
+                        title="<?php echo get_admin_url('user/edit/' . $user->id) ?>">
                         <td><?php echo $user->id ?></td>
                         <td><?php echo $user->username ?></td>
                         <td><?php echo $user->name ?></td>
                         <td><?php echo $user->email ?></td>
                         <td><?php echo $user->phone ?></td>
                         <td><?php echo $user->address ?></td>
-<!--                        --><?php //if ($user->id > 1): ?>
-                        <td><a class="delete-action" href="<?php echo get_admin_url('user/delete/' . $user->id) ?>"
-                               data-toggle="modal" data-target="#myModal"><i class="mdi mdi-delete "></i>Delete</a> / <a
-                                    href="<?php echo get_admin_url('user/edit/' . $user->id) ?>"><i class="mdi mdi-wrench"></i> Update</a>
-                            / <a
-                                    href="<?php echo get_admin_url('user/edit_password/' . $user->id) ?>"><i class="mdi mdi-wrench"></i> Change Password</a></td>
-<!--                        --><?php //else:?>
-<!--                        <td><span class="text-danger">Main admin</span></td>-->
-<!--                        --><?php //endif;?>
+                        <td><a href="<?php echo get_admin_url('user/edit/' . $user->id) ?>"><i
+                                        class="mdi mdi-wrench"></i></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

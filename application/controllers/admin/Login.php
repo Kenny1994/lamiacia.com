@@ -4,29 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends MY_Controller
 {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     *        http://example.com/index.php/welcome
-     *    - or -
-     *        http://example.com/index.php/welcome/index
-     *    - or -
-     * Since this controller is set as the default controller in
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
-     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->lang->load('vi', 'vietnamese');
+        $this->load->model('admin_model');
+    }
 
     // Hàm load form login
     public function index()
     {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
 
         $this->form_validation->set_message('required', $this->lang->line('required'));
 
@@ -37,7 +26,11 @@ class Login extends MY_Controller
             if ($this->form_validation->run()){
                 $this->form_validation->set_rules('login', 'login', 'callback_check_login');
                 if ($this->form_validation->run()) {
-                    $this->session->set_userdata('login',true);
+
+                    $username = $this->input->post('username');
+                    $user_id = $this->admin_model->get_current_userid($username);
+
+                    $this->session->set_userdata('login',$user_id);
                     redirect(get_admin_url());
                 }
             }
@@ -50,8 +43,6 @@ class Login extends MY_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $password = md5($password);
-
-        $this->load->model('admin_model');
         $where = [
             'username' => $username,
             'password' => $password
@@ -59,7 +50,7 @@ class Login extends MY_Controller
         if ($this->admin_model->check_exists($where)) {
             return true;
         }
-        $this->form_validation->set_message(__FUNCTION__, $this->lang->line('login-error'));
+        $this->form_validation->set_message(__FUNCTION__, "You did not sign in correctly or your account is temporarily disabled.");
         return false;
     }
 }

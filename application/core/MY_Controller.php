@@ -16,8 +16,9 @@ class MY_Controller extends CI_Controller
     {
 
         parent::__construct();
-        $this->check_controller();
         $this->load->helper('common');
+        $this->load->model('admin_model');
+        $this->check_controller();
     }
 
     /**
@@ -31,6 +32,7 @@ class MY_Controller extends CI_Controller
             case 'admin':
                 $this->load->helper('admin');
                 $this->_check_login();
+                $this->_set_admin_data();
                 break;
             default:
                 die('khong fai trang admin');
@@ -55,6 +57,17 @@ class MY_Controller extends CI_Controller
         //neu admin da dang nhap thi ko cho vao trang login nua
         if ($login && $controller =='login'){
             redirect(get_admin_url());
+        }
+    }
+
+    private function _set_admin_data()
+    {
+        $login = $this->session->userdata('login');
+        if ($login){
+            $id = $this->session->userdata('login');
+
+            $user_info = $this->admin_model->get_info($id);
+            $this->data['user_info'] = $user_info;
         }
     }
 }

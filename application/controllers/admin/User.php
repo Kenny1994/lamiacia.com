@@ -4,6 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User extends MY_Controller
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('form_validation');
+        $this->load->helper('form');
+        $this->load->helper('security');
+        $this->lang->load('vi', 'vietnamese');
+        $this->load->model('admin_model');
+    }
+
     public function create()
     {
         $this->load->model('admin_model');
@@ -24,17 +34,14 @@ class User extends MY_Controller
     public function index()
     {
         $input['order'] = array('id', 'ASC');
-        $this->load->model('admin_model');
 
-        $userCollection = $this->admin_model->get_list($input);
-        $totalUser = $this->admin_model->get_total($input);
+        $user_collection = $this->admin_model->get_list($input);
+        $total_user = $this->admin_model->get_total($input);
 
-        $this->data = [
-            'count' => $totalUser,
-            'collection' => $userCollection,
-            'temp' => 'admin/user/index',
-            'message' => $this->session->flashdata('message')
-        ];
+        $this->data['count'] = $total_user;
+        $this->data['collection'] = $user_collection;
+        $this->data['temp'] = 'admin/user/index';
+        $this->data['message'] = $this->session->flashdata('message');
 
         $this->load->view('admin/main', $this->data);
     }
@@ -44,45 +51,38 @@ class User extends MY_Controller
      */
     public function add()
     {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
-
-        //set vietnamese message
-        $this->form_validation->set_message('required', $this->lang->line('required'));
-        $this->form_validation->set_message('valid_email', $this->lang->line('invalid-email'));
-        $this->form_validation->set_message('matches', $this->lang->line('matches'));
-        $this->form_validation->set_message('is_unique', $this->lang->line('is_unique'));
 
         //neu co du lieu post len de ktra
         if ($this->input->post()) {
 
-            $this->form_validation->set_rules('name', 'Tên người dùng', 'required');
-            $this->form_validation->set_rules('username', 'Username', 'required|is_unique[admin.username]');
-            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-            $this->form_validation->set_rules('re-password', 'Re-Password', 'required|matches[password]');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[admin.email]');
-
+            $this->form_validation->set_rules('username', 'Username', 'required|min_length[3]|max_length[30]|trim|xss_clean|is_unique[admin.username]');
+            $this->form_validation->set_rules('name', 'Full Name', 'required|min_length[3]|max_length[14]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|xss_clean|is_unique[admin.email]');
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|xss_clean');
+            $this->form_validation->set_rules('re-password', 'Re-Password', 'required|matches[password]|xss_clean');
+            $this->form_validation->set_rules('current_password', 'Current User Password', 'required');
             //nhap lieu chinh xac
             if ($this->form_validation->run()) {
 
-                //them vao csdl
-                $this->load->model('admin_model');
-                $updatedInfo = [
-                    'username' => $this->input->post('username'),
-                    'password' => md5($this->input->post('password')),
-                    'name' => $this->input->post('name'),
-                    'email' => $this->input->post('email'),
-                    'phone' => $this->input->post('phone'),
-                    'address' => $this->input->post('address'),
-                ];
-                if ($this->admin_model->create($updatedInfo)) {
-                    $this->session->set_flashdata('message', 'Thêm mới quản trị viên thành công');
-                } else {
-                    $this->session->set_flashdata('message', 'Thêm mới quản trị viên không thành công');
+                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_password');
+
+                if ($this->form_validation->run()) {
+                    //them vao csdl
+                    $updatedInfo = [
+                        'username' => $this->input->post('username'),
+                        'password' => md5($this->input->post('password')),
+                        'name' => $this->input->post('name'),
+                        'email' => $this->input->post('email'),
+                        'phone' => $this->input->post('phone'),
+                        'address' => $this->input->post('address'),
+                    ];
+                    if ($this->admin_model->create($updatedInfo)) {
+                        $this->session->set_flashdata('message', 'Thêm mới quản trị viên thành công');
+                    } else {
+                        $this->session->set_flashdata('message', 'Thêm mới quản trị viên không thành công');
+                    }
+                    redirect(get_admin_url('user'));
                 }
-                redirect(get_admin_url('user'));
             }
         }
 
@@ -98,8 +98,6 @@ class User extends MY_Controller
     public function delete()
     {
         $id = $this->uri->rsegment(3);
-        //load model
-        $this->load->model('admin_model');
         //xoa du lieu
         if ($this->admin_model->delete($id)) {
             $this->session->set_flashdata('message', 'Xoá quản trị viên có mã `' . $id . '` thành công');
@@ -110,20 +108,11 @@ class User extends MY_Controller
         redirect(get_admin_url('user'));
     }
 
+    /**
+     * Edit admin information form
+     */
     public function edit()
     {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
-        $this->load->model('admin_model');
-
-        //set tap luat
-        $this->form_validation->set_message('required', $this->lang->line('required'));
-        $this->form_validation->set_message('valid_email', $this->lang->line('invalid-email'));
-        $this->form_validation->set_message('matches', $this->lang->line('matches'));
-        $this->form_validation->set_message('is_unique', $this->lang->line('is_unique'));
-
         //lay id cua quan tri v
         $id = $this->uri->rsegment(3);
         $id = (int)$id;
@@ -137,32 +126,45 @@ class User extends MY_Controller
         //neu co du lieu post len de ktra
         if ($this->input->post()) {
 
-            $this->form_validation->set_rules('username', 'Username', 'required');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-            $this->form_validation->set_rules('name', 'Full Name', 'required');
-            $this->form_validation->set_rules('new_password', 'New Password', 'min_length[6]');
-            $this->form_validation->set_rules('re_new_password', 'Re-New Password', 'matches[new_password]');
+            $current_user = $this->admin_model->get_current_username($id);
+            $is_username_unique = ($this->input->post('username') != $current_user) ? '|is_unique[admin.username]' : '';
+
+            $current_email = $this->admin_model->get_current_email($id);
+            $is_email_unique = ($this->input->post('email') != $current_email) ? '|is_unique[admin.email]' : '';
+
+            $this->form_validation->set_rules('username', 'Username', 'required|min_length[3]|max_length[30]|trim|xss_clean' . $is_username_unique);
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|xss_clean' . $is_email_unique);
+            $this->form_validation->set_rules('name', 'Full Name', 'required|min_length[3]|max_length[14]');
+            $this->form_validation->set_rules('new_password', 'New Password', 'min_length[6]|xss_clean');
+            $this->form_validation->set_rules('re_new_password', 'Re-New Password', 'matches[new_password]|xss_clean');
+            $this->form_validation->set_rules('current_password', 'Current User Password', 'required');
 
             //nhap lieu chinh xac
             if ($this->form_validation->run()) {
-                $newPassword = $this->input->post('new_password');
-                //them vao csdl
-                $updatedInfo = [
-                    'username' => $this->input->post('username'),
-                    'email' => $this->input->post('email'),
-                    'name' => $this->input->post('name'),
-                    'phone' => $this->input->post('phone'),
-                    'address' => $this->input->post('address'),
-                ];
-                if (isset($newPassword) && $newPassword){
-                    $updatedInfo['password'] = md5($newPassword);
+
+                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_password');
+
+                if ($this->form_validation->run()) {
+
+                    $newPassword = $this->input->post('new_password');
+                    //them vao csdl
+                    $updatedInfo = [
+                        'username' => $this->input->post('username'),
+                        'email' => $this->input->post('email'),
+                        'name' => $this->input->post('name'),
+                        'phone' => $this->input->post('phone'),
+                        'address' => $this->input->post('address'),
+                    ];
+                    if (isset($newPassword) && $newPassword) {
+                        $updatedInfo['password'] = md5($newPassword);
+                    }
+                    if ($this->admin_model->update($id, $updatedInfo)) {
+                        $this->session->set_flashdata('message', 'Change admin user information successfully');
+                    } else {
+                        $this->session->set_flashdata('message', 'There are something wrong while changing the information');
+                    }
+                    redirect(get_admin_url('user'));
                 }
-                if ($this->admin_model->update($id, $updatedInfo)) {
-                    $this->session->set_flashdata('message', 'Change admin user information successfully');
-                } else {
-                    $this->session->set_flashdata('message', 'There are something wrong while changing the information');
-                }
-                redirect(get_admin_url('user'));
             }
         }
 
@@ -174,65 +176,31 @@ class User extends MY_Controller
 
     }
 
-    public function edit_password()
-    {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
-        $this->load->model('admin_model');
-
-        //set tap luat
-        $this->form_validation->set_message('required', $this->lang->line('required'));
-        $this->form_validation->set_message('matches', $this->lang->line('matches'));
-
-        //lay id cua quan tri v
-        $id = $this->uri->rsegment(3);
-        $id = (int)$id;
-
-        $userInfo = $this->admin_model->get_info($id);
-        if (!$userInfo) {
-            $this->session->set_flashdata('message', 'This user is not exist');
-            redirect(get_admin_url('user'));
-        }
-
-        //neu co du lieu post len de ktra
-        if ($this->input->post()) {
-
-            $this->form_validation->set_rules('new_password', 'New Password', 'required|min_length[6]');
-            $this->form_validation->set_rules('re_new_password', 'Re-New Password', 'required|matches[new_password]');
-
-            //nhap lieu chinh xac
-            if ($this->form_validation->run()) {
-
-                //them vao csdl
-                $updatedInfo = [
-                    'password' => md5($this->input->post('new_password')),
-                ];
-                if ($this->admin_model->update($id, $updatedInfo)) {
-                    $this->session->set_flashdata('message', 'Change password successfully');
-                } else {
-                    $this->session->set_flashdata('message', 'There are something wrong while changing the password');
-                }
-                redirect(get_admin_url('user'));
-            }
-        }
-
-        $this->data = [
-            'temp' => 'admin/user/edit_password',
-            'user' => $userInfo
-        ];
-        $this->load->view('admin/main', $this->data);
-    }
     /**
-     * Action dang xuat
+     * Action logout
      */
     public function logout()
     {
-        if ($this->session->userdata('login'))
-        {
+        if ($this->session->userdata('login')) {
             $this->session->unset_userdata('login');
         }
         redirect(get_admin_url('login'));
+    }
+
+    /**
+     * Check current user password
+     * @return bool
+     */
+    public function check_password()
+    {
+        $id = $this->session->userdata('login');
+        $id = (int)$id;
+
+        $current_password = $this->admin_model->get_current_password($id);
+        if (md5($this->input->post('current_password')) == $current_password) {
+            return true;
+        }
+        $this->form_validation->set_message(__FUNCTION__, "You have entered an invalid password for current user.");
+        return false;
     }
 }

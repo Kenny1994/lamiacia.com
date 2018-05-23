@@ -41,3 +41,6 @@
     border: solid 1px #dfdfdf;
     padding: 5px;
 }
+.table-clicked{
+    cursor: pointer;
+}
