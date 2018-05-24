@@ -10,7 +10,7 @@
                 <form id="add-new-form" class="forms-sample" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <p class="card-description border-bottom">
-                            Personal Info
+                            Personal Information
                         </p>
                         <div class="form-group row">
                             <label for="username" class="col-sm-3 col-form-label">User Name<span

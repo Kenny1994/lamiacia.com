@@ -1,16 +1,17 @@
 <div class="page-header">
     <h3 class="page-title">
-        Chỉnh sửa danh mục sản phẩm.
+        <?php echo $catalog->name?> (ID: <?php echo $catalog->id?> )
     </h3>
 </div>
 <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
+    <div class="col-xl-10 col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Nhập form chỉnh sửa danh mục sản phẩm.</h4>
                 <form id="add-new-form" class="forms-sample" method="post" enctype="multipart/form-data">
                     <fieldset>
-
+                        <p class="card-description border-bottom">
+                            Catalog Information
+                        </p>
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label">Tên danh mục<span
                                         class="text-danger">*</span></label>

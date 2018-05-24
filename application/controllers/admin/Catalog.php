@@ -19,16 +19,18 @@ class Catalog extends MY_Controller
         $this->load->library('pagination');
         $config = [
             'total_rows' => $total_rows,
-            'base_url' => get_admin_url('catalog/index'),
+            'base_url' => get_admin_url('catalog'),
             'per_page' => 10,
             'uri_segment' => 4,
             'next_link' => '>',
             'prev_link' => '<',
-            'use_page_numbers' => true
+            'use_page_numbers' => true,
+            'page_query_string' => true,
+            'query_string_segment' => 'page'
         ];
         //khoi tao cau hinh phan trang
         $this->pagination->initialize($config);
-        $segment = $this->uri->segment(4);
+        $segment = $this->input->get('page');
         $segment = intval($segment);
         if ($segment > 0) {
             $segment = $segment - 1;
@@ -150,12 +152,10 @@ class Catalog extends MY_Controller
                 redirect(get_admin_url('catalog'));
             }
         }
+        $this->data['collection'] = $catalogParents;
+        $this->data['temp'] = 'admin/catalog/edit';
+        $this->data['catalog'] = $catalogInfo;
 
-        $this->data = [
-            'collection' => $catalogParents,
-            'temp' => 'admin/catalog/edit',
-            'catalog' => $catalogInfo
-        ];
         $this->load->view('admin/main', $this->data);
     }
 

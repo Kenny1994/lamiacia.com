@@ -22,32 +22,29 @@
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#user-manager" aria-expanded="false" aria-controls="user-manager">
-                <span class="menu-title">Tài Khoản</span>
+                <span class="menu-title">System</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi mdi-account-box-outline  menu-icon"></i>
             </a>
             <div class="collapse" id="user-manager">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('user')?>">Danh sách quản trị </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('user')?>">All Users</a></li>
                 </ul>
             </div>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#catalog-manager" aria-expanded="false" aria-controls="user-manager">
-                <span class="menu-title">Sản phẩm</span>
+                <span class="menu-title">Catalog</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-clipboard menu-icon"></i>
             </a>
             <div class="collapse" id="catalog-manager">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('product')?>">Sản phẩm</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('product')?>">Products</a></li>
                 </ul>
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('catalog')?>">Danh mục sản phẩm</a></li>
-                </ul>
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Phản hồi</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="<?php echo get_admin_url('catalog')?>">Categories</a></li>
                 </ul>
             </div>
         </li>

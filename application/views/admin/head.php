@@ -11,7 +11,7 @@
 <!-- inject:css -->
 <link rel="stylesheet" href="<?php echo base_url('assets/admin')?>/css/style.css">
 <!-- endinject -->
-<link rel="shortcut icon" href="<?php echo base_url('assets/admin')?>/images/favicon.png" />
+<link rel="shortcut icon" href="<?php echo base_url('upload')?>/lamiacia-logo.jpg" />
 <!--My custom CSS-->
 <link rel="stylesheet" href="<?php echo base_url('assets/admin')?>/css/custom.css">
 <!--End my custom CSS-->

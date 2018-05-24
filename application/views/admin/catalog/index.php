@@ -1,6 +1,6 @@
 <div class="page-header">
     <h3 class="page-title">
-        Bảng quản lý Danh mục sản phẩm.
+        Catalogs
     </h3>
 </div>
 <?php if (isset($message) && $message): ?>
@@ -12,7 +12,7 @@
     <div class="col-lg-12 grid-margin stretch-card table-list-record">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Tổng hợp danh mục / Số lượng <?php echo $count ?>.</h4>
+                <h4 class="card-title">Total catalogs: <?php echo $count ?>.</h4>
                 <a href="<?php echo get_admin_url('catalog/add') ?>" id="add-new-button"
                    class="btn btn-icon btn-rounded btn-gradient-primary">+</a>
             </div>
@@ -22,9 +22,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Thứ tự hiển thị</th>
-                    <th>Danh mục cha</th>
+                    <th>Catalog Name</th>
+                    <th>Position</th>
+                    <th>Parent ID</th>
                     <th>Site title</th>
                     <th>Meta Desc</th>
                     <th>Meta Key</th>
@@ -33,7 +33,8 @@
                 </thead>
                 <tbody>
                 <?php foreach ($collection as $catalog): ?>
-                    <tr>
+                    <tr class="table-clicked" id="record-<?php echo $catalog->id ?>"
+                        title="<?php echo get_admin_url('catalog/edit/' . $catalog->id) ?>">
                         <td><?php echo $catalog->id ?></td>
                         <td><?php echo $catalog->name ?></td>
                         <td><?php echo $catalog->sort_order ?></td>
@@ -41,16 +42,14 @@
                         <td><?php echo $catalog->site_title ?></td>
                         <td><?php echo $catalog->meta_desc ?></td>
                         <td><?php echo $catalog->meta_key ?></td>
-                        <td><a class="delete-action" href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>"
-                               data-toggle="modal" data-target="#myModal"><i class="mdi mdi-delete "></i>Delete</a> / <a
-                                    href="<?php echo get_admin_url('catalog/edit/' . $catalog->id) ?>"><i
-                                        class="mdi mdi-wrench"></i> Update</a></td>
+                        <td><a href="<?php echo get_admin_url('catalog/edit/' . $catalog->id) ?>"><i
+                                        class="mdi mdi-wrench"></i></a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
             <div class="pagination table-pagination">
-                <?php echo $this->pagination->create_links();?>
+                <?php echo $this->pagination->create_links(); ?>
             </div>
         </div>
     </div>
@@ -65,29 +64,10 @@
                 <p>Bạn chắc chắn muốn xóa danh mục này?</p>
             </div>
             <div class="modal-footer">
-                <a href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>" class="btn btn-gradient-info btn-fw">Có</a>
+                <a href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>"
+                   class="btn btn-gradient-info btn-fw">Có</a>
                 <button type="button" class="btn btn-gradient-dark btn-fw" data-dismiss="modal">Hủy</button>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.pagination a').each(function () {
-            $(this).on('click',function () {
-                alert('dasas');
-                $.ajax({
-                    type: "GET",
-                    url: $(this).attr('href'),
-                    success: function (html) {
-                        var markup = document.documentElement.innerHTML;
-                        alert(markup);
-                    }
-                });
-
-            });
-
-        });
-    });
-</script>
