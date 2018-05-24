@@ -1,9 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class User
+ */
 class User extends MY_Controller
 {
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -12,20 +18,6 @@ class User extends MY_Controller
         $this->load->helper('security');
         $this->lang->load('vi', 'vietnamese');
         $this->load->model('admin_model');
-    }
-
-    public function create()
-    {
-        $this->load->model('admin_model');
-        $data['username'] = 'hoangdeptrai';
-        $data['password'] = 'admin1';
-        $data['name'] = 'HoangND';
-        $data['admin_group_id'] = '1';
-        if ($this->admin_model->create($data)) {
-            echo 'them thanh cong';
-        } else {
-            echo 'k thanh cong';
-        }
     }
 
     /**
@@ -51,8 +43,6 @@ class User extends MY_Controller
      */
     public function add()
     {
-
-        //neu co du lieu post len de ktra
         if ($this->input->post()) {
 
             $this->form_validation->set_rules('username', 'Username', 'required|min_length[3]|max_length[30]|trim|xss_clean|is_unique[admin.username]');
@@ -61,13 +51,11 @@ class User extends MY_Controller
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|xss_clean');
             $this->form_validation->set_rules('re-password', 'Re-Password', 'required|matches[password]|xss_clean');
             $this->form_validation->set_rules('current_password', 'Current User Password', 'required');
-            //nhap lieu chinh xac
             if ($this->form_validation->run()) {
 
-                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_password');
+                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_old_password');
 
                 if ($this->form_validation->run()) {
-                    //them vao csdl
                     $updatedInfo = [
                         'username' => $this->input->post('username'),
                         'password' => md5($this->input->post('password')),
@@ -77,18 +65,15 @@ class User extends MY_Controller
                         'address' => $this->input->post('address'),
                     ];
                     if ($this->admin_model->create($updatedInfo)) {
-                        $this->session->set_flashdata('message', 'Thêm mới quản trị viên thành công');
+                        $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-success"></i><span class="text-success"> You saved the user.</span>');
                     } else {
-                        $this->session->set_flashdata('message', 'Thêm mới quản trị viên không thành công');
+                        $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while saving the user.</span>');
                     }
                     redirect(get_admin_url('user'));
                 }
             }
         }
-
-        $this->data = [
-            'temp' => 'admin/user/add'
-        ];
+        $this->data['temp'] = 'admin/user/add';
         $this->load->view('admin/main', $this->data);
     }
 
@@ -98,13 +83,16 @@ class User extends MY_Controller
     public function delete()
     {
         $id = $this->uri->rsegment(3);
-        //xoa du lieu
-        if ($this->admin_model->delete($id)) {
-            $this->session->set_flashdata('message', 'Xoá quản trị viên có mã `' . $id . '` thành công');
+
+        if ($id == $this->data['user_info']->id) {
+            $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> You cannot delete your own account.</span>');
         } else {
-            $this->session->set_flashdata('message', 'Xóa quản trị viên có mã `' . $id . '` không thành công');
+            if ($this->admin_model->delete($id)) {
+                $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-success"></i><span class="text-success"> You deleted the user.</span>');
+            } else {
+                $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while deleting the user.</span>');
+            }
         }
-        //tro ve trang danh sach user
         redirect(get_admin_url('user'));
     }
 
@@ -113,17 +101,15 @@ class User extends MY_Controller
      */
     public function edit()
     {
-        //lay id cua quan tri v
         $id = $this->uri->rsegment(3);
         $id = (int)$id;
 
         $userInfo = $this->admin_model->get_info($id);
         if (!$userInfo) {
-            $this->session->set_flashdata('message', 'This user is not exist');
+            $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> This user is not exist.</span>');
             redirect(get_admin_url('user'));
         }
 
-        //neu co du lieu post len de ktra
         if ($this->input->post()) {
 
             $current_user = $this->admin_model->get_current_username($id);
@@ -139,15 +125,13 @@ class User extends MY_Controller
             $this->form_validation->set_rules('re_new_password', 'Re-New Password', 'matches[new_password]|xss_clean');
             $this->form_validation->set_rules('current_password', 'Current User Password', 'required');
 
-            //nhap lieu chinh xac
             if ($this->form_validation->run()) {
 
-                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_password');
+                $this->form_validation->set_rules('current_password', 'Current User Password', 'callback_check_old_password');
+                $this->form_validation->set_rules('new_password', 'New Password', 'callback_check_new_password');
 
                 if ($this->form_validation->run()) {
-
                     $newPassword = $this->input->post('new_password');
-                    //them vao csdl
                     $updatedInfo = [
                         'username' => $this->input->post('username'),
                         'email' => $this->input->post('email'),
@@ -159,19 +143,16 @@ class User extends MY_Controller
                         $updatedInfo['password'] = md5($newPassword);
                     }
                     if ($this->admin_model->update($id, $updatedInfo)) {
-                        $this->session->set_flashdata('message', 'Change admin user information successfully');
+                        $this->session->set_flashdata('message', '<i class="mdi mdi-check-all text-success"></i><span class="text-success"> You saved the user.</span>');
                     } else {
-                        $this->session->set_flashdata('message', 'There are something wrong while changing the information');
+                        $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while saving the user.</span>');
                     }
                     redirect(get_admin_url('user'));
                 }
             }
         }
-
-        $this->data = [
-            'temp' => 'admin/user/edit',
-            'user' => $userInfo
-        ];
+        $this->data['temp'] = 'admin/user/edit';
+        $this->data['user'] = $userInfo;
         $this->load->view('admin/main', $this->data);
 
     }
@@ -191,7 +172,7 @@ class User extends MY_Controller
      * Check current user password
      * @return bool
      */
-    public function check_password()
+    public function check_old_password()
     {
         $id = $this->session->userdata('login');
         $id = (int)$id;
@@ -202,5 +183,53 @@ class User extends MY_Controller
         }
         $this->form_validation->set_message(__FUNCTION__, "You have entered an invalid password for current user.");
         return false;
+    }
+
+    /**
+     * Check the new password
+     * @return bool
+     */
+    public function check_new_password()
+    {
+        $id = $this->uri->rsegment(3);
+        $id = (int)$id;
+
+        $current_password = $this->admin_model->get_current_password($id);
+        if (md5($this->input->post('new_password')) == $current_password) {
+            $this->form_validation->set_message(__FUNCTION__, "Sorry, but this password has already been used. Please create another.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check current user's password when apply delete action
+     */
+    public function validate_delete()
+    {
+        $params = $this->input->post();
+        if ($params) {
+            if ($params['password'] == null) {
+                $result = [
+                    'error_message' => '<p>The Current User Password field is required.</p>',
+                    'status' => 'no'
+                ];
+                echo json_encode($result);
+            } else {
+                $current_password = $this->admin_model->get_current_password($params['user_id']);
+                if (md5($params['password']) == $current_password) {
+                    $result = [
+                        'error_message' => '',
+                        'status' => 'ok'
+                    ];
+                } else {
+                    $result = [
+                        'error_message' => '<p>You have entered an invalid password for current user.</p>',
+                        'status' => 'no'
+                    ];
+                }
+                echo json_encode($result);
+            }
+        }
     }
 }

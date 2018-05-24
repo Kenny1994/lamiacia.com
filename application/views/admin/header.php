@@ -18,11 +18,11 @@
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                     <div class="nav-profile-img">
-                        <img src="<?php echo base_url('assets/admin')?>/images/faces/myface.jpg" alt="image">
+                        <img src="<?php echo base_url('upload/user')?>/user-admin.png" alt="image">
                         <span class="availability-status online"></span>
                     </div>
                     <div class="nav-profile-text">
-                        <p class="mb-1 text-black">N.Đ Hoàng</p>
+                        <p class="mb-1 text-black"><?php echo $user_info->name?></p>
                     </div>
                 </a>
                 <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">

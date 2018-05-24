@@ -3,12 +3,12 @@
         <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
                 <div class="nav-profile-image">
-                    <img src="<?php echo base_url('assets/admin')?>/images/faces/myface.jpg" alt="profile">
+                    <img src="<?php echo base_url('upload/user')?>/user-admin.png" alt="profile">
                     <span class="login-status online"></span> <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                     <span class="font-weight-bold mb-2"><?php echo $user_info->name?></span>
-                    <span class="text-secondary text-small">Developer</span>
+                    <span class="text-secondary text-small">User ID: <?php echo $user_info->id?></span>
                 </div>
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>

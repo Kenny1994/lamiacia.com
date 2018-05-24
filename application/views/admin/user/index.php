@@ -5,7 +5,7 @@
 </div>
 <?php if (isset($message) && $message): ?>
     <blockquote class="blockquote blockquote-primary">
-        <i class="mdi mdi-check-all"></i><span style="font-size: 12px"><?php echo $message ?></span>
+        <?php echo $message ?>
     </blockquote>
 <?php endif; ?>
 <div class="row">

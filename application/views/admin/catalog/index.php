@@ -71,3 +71,23 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.pagination a').each(function () {
+            $(this).on('click',function () {
+                alert('dasas');
+                $.ajax({
+                    type: "GET",
+                    url: $(this).attr('href'),
+                    success: function (html) {
+                        var markup = document.documentElement.innerHTML;
+                        alert(markup);
+                    }
+                });
+
+            });
+
+        });
+    });
+</script>

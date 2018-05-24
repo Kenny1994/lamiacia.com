@@ -9,6 +9,9 @@
             <div class="card-body">
                 <form id="add-new-form" class="forms-sample" method="post" enctype="multipart/form-data">
                     <fieldset>
+                        <p class="card-description border-bottom">
+                            Personal Info
+                        </p>
                         <div class="form-group row">
                             <label for="username" class="col-sm-3 col-form-label">User Name<span
                                         class="text-danger">*</span></label>
@@ -51,6 +54,9 @@
                                        type="text" value="<?php echo set_value('address') ?>">
                             </div>
                         </div>
+                        <p class="card-description border-bottom">
+                            Account Password Information
+                        </p>
                         <div class="form-group row">
                             <label for="password" class="col-sm-3 col-form-label">Password<span
                                         class="text-danger">*</span></label>
@@ -71,6 +77,9 @@
                                 <div class="text-danger"><?php echo form_error('re-password') ?></div>
                             </div>
                         </div>
+                        <p class="card-description border-bottom">
+                            Current User Identity Verification
+                        </p>
                         <div class="form-group row">
                             <label for="current_password" class="col-sm-3 col-form-label">Your Password<span
                                         class="text-danger">*</span></label>

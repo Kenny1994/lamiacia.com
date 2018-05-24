@@ -11,4 +11,3 @@ $('.table-clicked').each(function () {
         window.location.href = url;
     });
 });
-

@@ -30,18 +30,17 @@ class Catalog extends MY_Controller
         $this->pagination->initialize($config);
         $segment = $this->uri->segment(4);
         $segment = intval($segment);
-        if ($segment>0){
-            $segment = $segment -1;
+        if ($segment > 0) {
+            $segment = $segment - 1;
         }
-        $input['limit'] = array($config['per_page'], $segment*$config['per_page']);
+        $input['limit'] = array($config['per_page'], $segment * $config['per_page']);
         $input['order'] = array('id', 'DESC');
         $list = $this->catalog_model->get_list($input);
-        $this->data = [
-            'count' => $total_rows,
-            'temp' => 'admin/catalog/index',
-            'collection' => $list,
-            'message' => $this->session->flashdata('message')
-        ];
+        $this->data['count'] = $total_rows;
+        $this->data['temp'] = 'admin/catalog/index';
+        $this->data['collection'] = $list;
+        $this->data['message'] = $this->session->flashdata('message');
+
         $this->load->view('admin/main', $this->data);
     }
 
