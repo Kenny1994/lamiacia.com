@@ -12,9 +12,9 @@
                 <div class="content-wrapper">
                     <?php $this->load->view($temp,$this->data);?>
                 </div>
-                <?php $this->load->view('admin/footer');?>
             </div>
         </div>
+        <?php $this->load->view('admin/footer');?>
     </div>
     </body>
 </html>

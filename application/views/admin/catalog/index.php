@@ -5,7 +5,7 @@
 </div>
 <?php if (isset($message) && $message): ?>
     <blockquote class="blockquote blockquote-primary">
-        <i class="mdi mdi-check-all"></i><span style="font-size: 12px"><?php echo $message ?></span>
+        <?php echo $message ?>
     </blockquote>
 <?php endif; ?>
 <div class="row">
@@ -16,8 +16,6 @@
                 <a href="<?php echo get_admin_url('catalog/add') ?>" id="add-new-button"
                    class="btn btn-icon btn-rounded btn-gradient-primary">+</a>
             </div>
-
-
             <table id="list-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -50,23 +48,6 @@
             </table>
             <div class="pagination table-pagination">
                 <?php echo $this->pagination->create_links(); ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Bạn chắc chắn muốn xóa danh mục này?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="<?php echo get_admin_url('catalog/delete/' . $catalog->id) ?>"
-                   class="btn btn-gradient-info btn-fw">Có</a>
-                <button type="button" class="btn btn-gradient-dark btn-fw" data-dismiss="modal">Hủy</button>
             </div>
         </div>
     </div>

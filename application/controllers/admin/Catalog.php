@@ -8,6 +8,9 @@ class Catalog extends MY_Controller
     {
         parent::__construct();
         $this->load->model('catalog_model');
+        $this->load->library('pagination');
+        $this->load->library('form_validation');
+        $this->load->helper('form');
     }
 
     /**
@@ -16,7 +19,6 @@ class Catalog extends MY_Controller
     public function index()
     {
         $total_rows = $this->catalog_model->get_total();
-        $this->load->library('pagination');
         $config = [
             'total_rows' => $total_rows,
             'base_url' => get_admin_url('catalog'),
@@ -28,7 +30,6 @@ class Catalog extends MY_Controller
             'page_query_string' => true,
             'query_string_segment' => 'page'
         ];
-        //khoi tao cau hinh phan trang
         $this->pagination->initialize($config);
         $segment = $this->input->get('page');
         $segment = intval($segment);
@@ -51,30 +52,15 @@ class Catalog extends MY_Controller
      */
     public function add()
     {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
-
-        //set vietnamese message
-        $this->form_validation->set_message('required', $this->lang->line('required'));
-        $this->form_validation->set_message('numeric', $this->lang->line('numeric'));
-
         $input ['where'] = [
             'parent_id' => 0
         ];
         $catalogParents = $this->catalog_model->get_list($input);
 
-        //neu co du lieu post len de ktra
         if ($this->input->post()) {
-
-            $this->form_validation->set_rules('name', 'Tên danh mục', 'required');
-            $this->form_validation->set_rules('sort_order', 'Thứ tự hiển thị', 'required|numeric');
-
-            //nhap lieu chinh xac
+            $this->form_validation->set_rules('name', 'Category Name', 'required');
+            $this->form_validation->set_rules('sort_order', 'Position', 'required|numeric');
             if ($this->form_validation->run()) {
-
-                //them vao csdl
                 $updatedInfo = [
                     'name' => $this->input->post('name'),
                     'site_title' => $this->input->post('site_title'),
@@ -84,58 +70,39 @@ class Catalog extends MY_Controller
                     'sort_order' => (int)$this->input->post('sort_order'),
                 ];
                 if ($this->catalog_model->create($updatedInfo)) {
-                    $this->session->set_flashdata('message', 'Thêm mới danh mục thành công');
+                    $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-success"></i><span class="text-success"> You saved the category.</span>');
                 } else {
-                    $this->session->set_flashdata('message', 'Thêm mới danh mục không thành công');
+                    $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while saving the category.</span>');
                 }
                 redirect(get_admin_url('catalog'));
             }
         }
-
-        $this->data = [
-            'collection' => $catalogParents,
-            'temp' => 'admin/catalog/add'
-        ];
+        $this->data['collection'] = $catalogParents;
+        $this->data['temp'] = 'admin/catalog/add';
         $this->load->view('admin/main', $this->data);
     }
 
     public function edit()
     {
-        //load
-        $this->load->library('form_validation');
-        $this->load->helper('form');
-        $this->lang->load('vi', 'vietnamese');
-
-        //set vietnamese message
-        $this->form_validation->set_message('required', $this->lang->line('required'));
-        $this->form_validation->set_message('numeric', $this->lang->line('numeric'));
-
         $input ['where'] = [
             'parent_id' => 0
         ];
         $catalogParents = $this->catalog_model->get_list($input);
-
-        //lay id cua danh muc
         $id = $this->uri->rsegment(3);
         $id = (int)$id;
 
         $catalogInfo = $this->catalog_model->get_info($id);
 
         if (!$catalogInfo) {
-            $this->session->set_flashdata('message', 'Không tồn tại danh muc này');
+            $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> This category is not exist.</span>');
             redirect(get_admin_url('catalog'));
         }
-
-        //neu co du lieu post len de ktra
         if ($this->input->post()) {
 
             $this->form_validation->set_rules('name', 'Tên danh mục', 'required');
             $this->form_validation->set_rules('sort_order', 'Thứ tự hiển thị', 'required|numeric');
 
-            //nhap lieu chinh xac
             if ($this->form_validation->run()) {
-
-                //them vao csdl
                 $updatedInfo = [
                     'name' => $this->input->post('name'),
                     'site_title' => $this->input->post('site_title'),
@@ -145,9 +112,9 @@ class Catalog extends MY_Controller
                     'sort_order' => (int)$this->input->post('sort_order'),
                 ];
                 if ($this->catalog_model->update($id, $updatedInfo)) {
-                    $this->session->set_flashdata('message', 'Sửa thông tin danh muc `' . $id . '` thành công');
+                    $this->session->set_flashdata('message', '<i class="mdi mdi-check-all text-success"></i><span class="text-success"> You saved the category.</span>');
                 } else {
-                    $this->session->set_flashdata('message', 'Sửa thông tin danh muc `' . $id . '` không thành công');
+                    $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while saving the category.</span>');
                 }
                 redirect(get_admin_url('catalog'));
             }
@@ -159,18 +126,17 @@ class Catalog extends MY_Controller
         $this->load->view('admin/main', $this->data);
     }
 
+    /**
+     * Delete category action
+     */
     public function delete()
     {
         $id = $this->uri->rsegment(3);
-        //load model
-        $this->load->model('catalog_model');
-        //xoa du lieu
         if ($this->catalog_model->delete($id)) {
-            $this->session->set_flashdata('message', 'Xoá danh muc có mã `' . $id . '` thành công');
+            $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-success"></i><span class="text-success"> You deleted the category.</span>');
         } else {
-            $this->session->set_flashdata('message', 'Xóa danh muc có mã `' . $id . '` không thành công');
+            $this->session->set_flashdata('message', '<i class=" mdi mdi-window-close text-danger"></i><span class="text-danger"> There are something wrong while deleting the category.</span>');
         }
-        //tro ve trang danh sach user
         redirect(get_admin_url('catalog'));
     }
 }

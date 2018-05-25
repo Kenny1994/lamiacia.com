@@ -90,8 +90,8 @@
                                 <div class="text-danger"><?php echo form_error('current_password') ?></div>
                             </div>
                         </div>
+                        <a href="<?php echo get_admin_url('user') ?>" class="btn btn-light mr-2"><-- Back</a>
                         <input type="submit" class="btn btn-gradient-primary mr-2" value="Submit">
-                        <a href="<?php echo get_admin_url('user') ?>" class="btn btn-light mr-2">Back</a>
                     </fieldset>
                 </form>
             </div>
